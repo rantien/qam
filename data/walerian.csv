@@ -1,2 +1,8 @@
+20250815|hammer|marteau|de|['de', 'objet']
+20250815|hammer|marteau|objet|['de', 'objet']
+20250815|hund|chien|animal|['animal', 'de']
+20250815|hund|chien|de|['animal', 'de']
+20250815|katze|chat|animal|['animal', 'de']
+20250815|katze|chat|de|['animal', 'de']
 20250814|kot|cat|pl|['pl', 'animal']
 20250814|kot|cat|animal|['pl', 'animal']

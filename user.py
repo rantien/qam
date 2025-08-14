@@ -20,7 +20,7 @@ class User:
         with open(self.filename, 'r') as f:
             reader = csv.reader(f, delimiter = '|')
             for row in reader:
-                qa_row = QA(row[1], row[2], row[4])    
+                qa_row = QA(row[1], row[2], list(row[4]))    
                 if qa_row == qa:
                         return True
         return False
@@ -55,16 +55,23 @@ class User:
                 for r in records:
                     writer.writerow([r[0], r[1], r[2], r[3], r[4]])
 
-    def display_qa(self, tags = []):
+    def display_qa(self, tags = None):
+        if tags is None:
+            tags = []
+
         qa_list = []
         with open(self.filename, 'r', encoding = 'utf-8') as f:
             reader = csv.reader(f, delimiter = '|')
+            list_dummies = []
             for row in reader:
-                if tags:
-                    if row[3] in tags:
+                dummy_str = f'{row[0]}|{row[1]}|{row[2]}|{row[4]}'
+                if not dummy_str in list_dummies:
+                    if tags:
+                        if row[3] in tags:
+                            qa_list.append([row[0], row[1], row[2], row[4]])
+                    else:
                         qa_list.append([row[0], row[1], row[2], row[4]])
-                else:
-                    qa_list.append([row[0], row[1], row[2], row[4]])
+                    list_dummies.append(dummy_str) 
         print(tabulate(qa_list, headers = ['date', 'q', 'a', 'tags']))
 
     def generate_qa_list(self, tags):

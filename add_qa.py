@@ -24,7 +24,7 @@ if __name__ == '__main__':
             over = True
         else:
             counter += 1
-
+    
     qa = QA(q, a, tags)
     user.add_qa(qa)
 
