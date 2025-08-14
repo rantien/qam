@@ -1,7 +1,7 @@
 import datetime
 
 class VocUnit:
-    def __init__(self, string1, string2, tags):
+    def __init__(self, string1, string2, tags = []):
         self.string1 = string1
         self.string2 = string2
         self.tags = tags
@@ -43,4 +43,6 @@ if __name__ == '__main__':
     print(v1)
     print(v1 == v2)
     v3 = VocUnit('pies', 'chien', ['animals', 'pl'])
+    print(v1 == v3)
+    v3.reverse()
     print(v1 == v3)
