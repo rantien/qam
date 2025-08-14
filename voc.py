@@ -1,48 +1,37 @@
-import datetime
+from datetime import datetime
+from tabulate import tabulate
 
 class VocUnit:
     def __init__(self, string1, string2, tags = []):
         self.string1 = string1
         self.string2 = string2
         self.tags = tags
-        self.datetime = datetime.datetime.now()
+        self.date = datetime.now().strftime('%Y%m%d')
 
     def __str__(self):
-        return f'''string1  : {self.string1}
-string2  : {self.string2}
-tags     : {self.tags}
-datetime : {self.datetime}'''
+        return f'''string1: {self.string1}
+string2: {self.string2}
+tags   : {self.tags}
+date   : {self.date}
+'''
+
+    def display(self):
+        headers = ['date', 'string1', 'string2', 'tags']
+        content = [[self.date, self.string1, self.string2, self.tags]]
+        print(tabulate(content, headers))
 
     def __eq__(self, other):
-        return self.string1 == other.string1 and self.string2 == other.string2
+        print(other.tags.sort())
+        print(self.tags.sort())
+        return self.string1 == other.string1 and self.string2 == other.string2 and self.tags.sort() == other.tags.sort()
 
     def reverse(self):
         self.string1, self.string2 = self.string2, self.string1
 
-def is_string_ok(my_str):
-    return not my_str.replace(' ', '') == ''
-
-def input_voc_unit():
-        string1 = ''
-        string2 = ''
-        while not is_string_ok(string1):
-               string1 = input('Enter string1: ')
-        while not is_string_ok(string2):
-               string2 = input('Enter string2: ')
-        tags = input("Enter tags (separated by ','): ")
-        tags = [tag.strip() for tag in tags.split(',')]
-        return VocUnit(string1, string2, tags)
-
 
 if __name__ == '__main__':
     v1 = VocUnit('pies', 'chien', ['animaux', 'pl'])
-    print(v1)
-    v1.reverse()
-    print(v1)
-    v2 = VocUnit('kot', 'chat', ['animaux', 'pl'])
-    print(v1)
-    print(v1 == v2)
     v3 = VocUnit('pies', 'chien', ['animals', 'pl'])
     print(v1 == v3)
-    v3.reverse()
-    print(v1 == v3)
+    print(v1)
+    v1.display()
