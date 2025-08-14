@@ -4,6 +4,12 @@ from os.path import isfile
 from qa import QA 
 from tabulate import tabulate
 
+# '"['a', 'b', 'c']" => ['a', 'b', 'c']
+
+def transform_str_into_list(my_str):
+    return [element.strip()[1:-1] for element in my_str[1:-1].split(',')]
+
+
 class User:
     def __init__(self, my_str):
         self.name = my_str
@@ -20,7 +26,7 @@ class User:
         with open(self.filename, 'r') as f:
             reader = csv.reader(f, delimiter = '|')
             for row in reader:
-                qa_row = QA(row[1], row[2], list(row[4]))    
+                qa_row = QA(row[1], row[2], transform_str_into_list(row[4]))    
                 if qa_row == qa:
                         return True
         return False
@@ -55,7 +61,7 @@ class User:
                 for r in records:
                     writer.writerow([r[0], r[1], r[2], r[3], r[4]])
 
-    def display_qa(self, tags = None):
+    def generate_qa_list(self, tags = None):
         if tags is None:
             tags = []
 
@@ -72,14 +78,11 @@ class User:
                     else:
                         qa_list.append([row[0], row[1], row[2], row[4]])
                     list_dummies.append(dummy_str) 
-        print(tabulate(qa_list, headers = ['date', 'q', 'a', 'tags']))
-
-    def generate_qa_list(self, tags):
-        qa_list = [] 
-        with open(self.filename, 'r', encoding = 'utf-8') as f:
-             reader = csv.reader(f, delimiter = '|')
-             for row in reader:
-                 qa_row = QA(row[1], row[2], row[4])    
-                 if row[3] in tags:
-                    qa_list.append(qa_row)
         return qa_list
+
+    def display_qa_list(self, tags = None):
+        if tags is None:
+            tags = []
+
+        qa_list = self.generate_qa_list(tags)
+        print(tabulate(qa_list, headers = ['date', 'q', 'a', 'tags']))
