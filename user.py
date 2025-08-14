@@ -1,7 +1,7 @@
 from datetime import datetime
 import csv
 from os.path import isfile
-from voc import VocUnit 
+from qa import QA 
 from tabulate import tabulate
 
 class User:
@@ -16,34 +16,34 @@ class User:
         with open(self.filename, 'r') as f:
             return len(f.readlines())
 
-    def does_voc_exist(self, voc):
+    def does_qa_exist(self, qa):
         with open(self.filename, 'r') as f:
             reader = csv.reader(f, delimiter = '|')
             for row in reader:
-                voc_row = VocUnit(row[1], row[2])    
-                if voc_row == voc:
+                qa_row = QA(row[1], row[2], row[4])    
+                if qa_row == qa:
                         return True
         return False
 
-    def add_voc(self, voc):
-        if self.does_voc_exist(voc):
+    def add_qa(self, qa):
+        if self.does_qa_exist(qa):
             print(f'There is already such a record.')
             return False
         
         records = []
-        if not voc.tags:
+        if not qa.tags:
             records += [[datetime.now().strftime('%Y%m%d'), \
-                         voc.string1, \
-                         voc.string2, \
+                         qa.q, \
+                         qa.a, \
                          '',
                          '']]
         else:
-            for tag in voc.tags:
+            for tag in qa.tags:
                 records += [[datetime.now().strftime('%Y%m%d'), \
-                             voc.string1, \
-                             voc.string2, \
+                             qa.q, \
+                             qa.a, \
                              tag,
-                             voc.tags]]
+                             qa.tags]]
         
         with open(self.filename, 'r', encoding = 'utf-8') as f:
                 reader = csv.reader(f, delimiter = '|')
@@ -55,24 +55,24 @@ class User:
                 for r in records:
                     writer.writerow([r[0], r[1], r[2], r[3], r[4]])
 
-    def display_voc(self, tags = []):
-        voc_list = []
+    def display_qa(self, tags = []):
+        qa_list = []
         with open(self.filename, 'r', encoding = 'utf-8') as f:
             reader = csv.reader(f, delimiter = '|')
             for row in reader:
                 if tags:
                     if row[3] in tags:
-                        voc_list.append(row)
+                        qa_list.append([row[0], row[1], row[2], row[4]])
                 else:
-                    voc_list.append(row)
-        print(tabulate(voc_list, headers = ['date', '#1', '#2', 'tags']))
+                    qa_list.append([row[0], row[1], row[2], row[4]])
+        print(tabulate(qa_list, headers = ['date', 'q', 'a', 'tags']))
 
-    def generate_voc_list(self, tags):
-        voc_list = [] 
+    def generate_qa_list(self, tags):
+        qa_list = [] 
         with open(self.filename, 'r', encoding = 'utf-8') as f:
              reader = csv.reader(f, delimiter = '|')
              for row in reader:
-                 voc_row = VocUnit(row[1], row[2], row[4])    
+                 qa_row = QA(row[1], row[2], row[4])    
                  if row[3] in tags:
-                    voc_list.append(voc_row)
-        return voc_list
+                    qa_list.append(qa_row)
+        return qa_list
