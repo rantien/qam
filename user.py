@@ -61,6 +61,8 @@ class User:
                 for r in records:
                     writer.writerow([r[0], r[1], r[2], r[3], r[4]])
 
+        print(f'{self.filename} updated.')
+
     def generate_qa_list(self, tags = None):
         if tags is None:
             tags = []
@@ -85,4 +87,5 @@ class User:
             tags = []
 
         qa_list = self.generate_qa_list(tags)
-        print(tabulate(qa_list, headers = ['date', 'q', 'a', 'tags']))
+        
+        print('\n' + tabulate(qa_list, headers = ['date', 'q', 'a', 'tags']) + '\n')
