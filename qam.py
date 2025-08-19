@@ -11,18 +11,9 @@ def add_qa(user):
     except:
         print('Add at least two parameters (Q and A).')
         exit()
-        I
-    tags = []
-    over = False
-    counter = 4
-    while not over:
-        try:
-            tags.append(argv[counter])
-        except:
-            over = True
-        else:
-            counter += 1
     
+    tags = argv[4:]
+
     qa = QA(q, a, tags)
     user.add_qa(qa)
 
@@ -30,30 +21,12 @@ def add_qa_from_xlsx(user):
     pass
 
 def display_qa_list(user):
-    tags = []
-    over = False
-    counter = 2 
-    while not over:
-        try:
-            tags.append(argv[counter])
-        except:
-            over = True
-        else:
-            counter += 1
+    tags = argv[2:]
 
     user.display_qa_list(tags = tags)
 
 def generate_quiz(user):
-    tags = []
-    over = False
-    counter = 2 
-    while not over:
-        try:
-            tags.append(argv[counter])
-        except:
-            over = True
-        else:
-            counter += 1
+    tags = argv[2:]
 
     qa_list = user.generate_qa_list(tags = tags)
     shuffle(qa_list)
@@ -67,6 +40,10 @@ def display_tags(user):
 
 def remove(user):
     pass
+
+def switch_user():
+    pass
+
 
 if __name__ == '__main__':
     
@@ -85,7 +62,11 @@ if __name__ == '__main__':
             case '-t':
                 display_tags(user)
             case '-rm':
-                remove(user)        
+                remove(user)
+            case '-su':
+                switch_user()
+            case _:
+                print('The first parameter is not appropriate.')
 
     except:
         print('Missing parameters.')
