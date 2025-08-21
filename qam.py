@@ -1,7 +1,7 @@
 from qa import QA
+from user import get_user
 from quiz import Quiz, Question
 from sys import argv
-from get_user import get_user
 from random import shuffle
 from openpyxl import load_workbook
 

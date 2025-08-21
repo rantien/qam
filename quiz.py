@@ -11,7 +11,6 @@ class Question:
 
 class Quiz:
     def __init__(self, question_list, reverse = False):
-        print(f'{reverse=}')
         self.over = False 
         self.points = 0
         self.length = min(5, len(question_list))
