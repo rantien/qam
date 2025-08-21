@@ -4,16 +4,19 @@ class Question:
         self.a = a
         self.tags = tags
 
-    def eval_answer(self, my_a):
-        return self.a == my_a 
+    def eval_answer(self, my_answer):
+        a = self.a.replace('’', "'")
+        my_answer = my_answer.replace('’', "'")
+        return a == my_answer 
 
 class Quiz:
-    def __init__(self, question_list, order = True):
+    def __init__(self, question_list, reverse = False):
+        print(f'{reverse=}')
         self.over = False 
         self.points = 0
         self.length = min(5, len(question_list))
         self.pos = 1
-        if order:
+        if not reverse:
             self.questions = [Question(question.q, question.a, question.tags) for question in question_list[:self.length]]
         else:
             self.questions = [Question(question.a, question.q, question.tags) for question in question_list[:self.length]] 
@@ -52,7 +55,6 @@ class Quiz:
                 self.increment()
                 return False
         else:
-            self.increment()
             return False
 
     def run(self):

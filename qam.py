@@ -43,7 +43,7 @@ def display_qa_list(user):
 
     user.display_qa_list(tags = tags)
 
-def generate_quiz(user):
+def generate_quiz(user, reverse = False):
     tags = argv[2:]
 
     qa_list = user.generate_qa_list(tags = tags)
@@ -52,9 +52,10 @@ def generate_quiz(user):
         exit()
 
     shuffle(qa_list)
+
     question_list = [Question(qa[1], qa[2], qa[3]) for qa in qa_list]
 
-    quiz = Quiz(question_list)
+    quiz = Quiz(question_list, reverse)
     quiz.run()
 
 def display_tags(user):
@@ -86,6 +87,8 @@ if __name__ == '__main__':
             display_qa_list(user)
         case '-q':
             generate_quiz(user)
+        case '-qr':
+            generate_quiz(user, reverse = True)
         case '-t':
             display_tags(user)
         case '-rm':
