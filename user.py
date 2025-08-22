@@ -31,6 +31,17 @@ class User:
                         return True
         return False
 
+    def get_tags(self):
+        tags = []
+        with open(self.filename, 'r') as f:
+            reader = csv.reader(f, delimiter = '|')
+            for row in reader:
+                tags += transform_str_into_list(row[4])
+        tags = list(set(tags))
+        tags.sort()
+        return tags
+
+
     def add_qa(self, qa):
         if self.does_qa_exist(qa):
             print(f'There is already such a record.')

@@ -59,7 +59,8 @@ def generate_quiz(user, reverse = False):
     quiz.run()
 
 def display_tags(user):
-    pass
+    tags = user.get_tags()
+    print(tags)
 
 def remove(user):
     pass
