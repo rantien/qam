@@ -31,15 +31,23 @@ class User:
                         return True
         return False
 
-    def get_tags(self):
-        tags = []
+    def get_tags(self, tags = None):
+        if tags is None:
+            tags = []
+        
+        all_tags = []
         with open(self.filename, 'r') as f:
             reader = csv.reader(f, delimiter = '|')
             for row in reader:
-                tags += transform_str_into_list(row[4])
-        tags = list(set(tags))
-        tags.sort()
-        return tags
+                list_row = transform_str_into_list(row[4])
+                if tags == []:
+                    all_tags += list_row
+                elif set(tags).intersection(list_row) == set(tags):
+                    all_tags += list_row
+
+        all_tags = list(set(all_tags))
+        all_tags.sort()
+        return all_tags
 
 
     def add_qa(self, qa):

@@ -5,6 +5,7 @@ from sys import argv
 from random import shuffle
 from openpyxl import load_workbook
 
+# add a QA with the tags entered as args 
 
 def add_qa(user):
     try:                                                  
@@ -17,6 +18,8 @@ def add_qa(user):
     tags = argv[4:]
     qa = QA(q, a, tags)
     user.add_qa(qa)
+
+# add all QA from the .xlsx (1st and 2nd columns) with the tags entered as args
 
 def add_qa_from_xlsx(user):
     try:
@@ -38,10 +41,14 @@ def add_qa_from_xlsx(user):
         qa = QA(q, a, tags)
         user.add_qa(qa)
 
+# display all QA related to the tags entered as args
+
 def display_qa_list(user):
     tags = argv[2:]
 
     user.display_qa_list(tags = tags)
+
+# generate a quiz considering the tags entered as args
 
 def generate_quiz(user, reverse = False):
     tags = argv[2:]
@@ -58,9 +65,12 @@ def generate_quiz(user, reverse = False):
     quiz = Quiz(question_list, reverse)
     quiz.run()
 
+# display all tags or the tags related to the ones entered as args
+
 def display_tags(user):
-    tags = user.get_tags()
-    print(tags)
+    tags = argv[2:]
+    all_tags = user.get_tags(tags = tags)
+    print(all_tags)
 
 def remove(user):
     pass
