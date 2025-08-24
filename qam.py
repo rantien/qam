@@ -16,6 +16,8 @@ def add_qa(user):
         exit()
     
     tags = argv[4:]
+    tags.sort()
+
     qa = QA(q, a, tags)
     user.add_qa(qa)
 
@@ -29,6 +31,7 @@ def add_qa_from_xlsx(user):
         exit()
 
     tags = argv[3:]
+    tags.sort()
 
     wb = load_workbook(filename = filename)
     ws = wb.active
@@ -60,7 +63,7 @@ def generate_quiz(user, reverse = False):
 
     shuffle(qa_list)
 
-    question_list = [Question(qa[1], qa[2], qa[3]) for qa in qa_list]
+    question_list = [Question(qa[2], qa[3], qa[4]) for qa in qa_list]
 
     quiz = Quiz(question_list, reverse)
     quiz.run()
@@ -72,8 +75,11 @@ def display_tags(user):
     all_tags = user.get_tags(tags = tags)
     print(all_tags)
 
-def remove(user):
-    pass
+# remove all id
+
+def remove_id(user):
+    list_id = argv[2:]
+    user.remove_id(list_id = list_id)
 
 def switch_user():
     pass
@@ -103,7 +109,7 @@ if __name__ == '__main__':
         case '-t':
             display_tags(user)
         case '-rm':
-            remove(user)
+            remove_id(user)
         case '-su':
             switch_user()
         case _:
