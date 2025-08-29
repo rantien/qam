@@ -36,7 +36,7 @@ def add_qa_from_xlsx(user):
     wb = load_workbook(filename = filename)
     ws = wb.active
     length = len(list(ws.rows))
-    lines = [(ws.cell(i, 1).value, ws.cell(i, 2).value) for i in range(1,20)]
+    lines = [(ws.cell(i, 1).value, ws.cell(i, 2).value) for i in range(1, length + 1) if ws.cell(i, 1) != '' and ws.cell(i,2) != '']
     
     for line in lines:
         q = line[0]
